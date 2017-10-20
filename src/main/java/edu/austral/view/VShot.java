@@ -39,4 +39,6 @@ public class VShot extends ViewPiece {
     public void draw(int x, int y) {
 
     }
+
+    public void update() {}
 }

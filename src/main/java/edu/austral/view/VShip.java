@@ -35,6 +35,12 @@ public class VShip extends ViewPiece {
     }
 
     @Override
+    public void update() {
+
+    }
+
+
+    @Override
     public void destroy() {
 
     }

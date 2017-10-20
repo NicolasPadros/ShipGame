@@ -2,6 +2,7 @@ package edu.austral.models;
 
 import edu.austral.util.Vector2;
 import edu.austral.view.VShip;
+import edu.austral.view.ViewPiece;
 
 /**
  * Created by nicolas-p on 14/10/17.
@@ -38,5 +39,9 @@ public class Ship {
 
     public void upgradeGun(Gun newGun){
         upgrade = newGun;
+    }
+
+    public ViewPiece getVShip() {
+        return viewShip;
     }
 }

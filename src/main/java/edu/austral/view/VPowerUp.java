@@ -21,6 +21,11 @@ public class VPowerUp extends ViewPiece {
 
     }
 
+    @Override
+    public void update() {
+
+    }
+
 
     public VPowerUp(PApplet parent, Vector2 position) {
         super(parent, position);

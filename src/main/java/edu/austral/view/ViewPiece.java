@@ -32,4 +32,7 @@ public abstract class ViewPiece implements Collisionable<ViewPiece>{
     }
 
     public abstract void draw(int x, int y);
+
+
+    public abstract void update();
 }
