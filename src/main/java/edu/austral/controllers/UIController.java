@@ -1,9 +1,12 @@
 package edu.austral.controllers;
 
+import edu.austral.models.Asteroid;
 import edu.austral.view.VAsteroid;
 import edu.austral.view.VShot;
 import edu.austral.view.ViewPiece;
+import processing.core.PApplet;
 
+import javax.swing.text.View;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,8 +36,8 @@ public class UIController {
         for (ViewPiece viewPiece : elementsInScreen) {
                 viewPiece.update();
             }
+    }
 
-        }
 
 
     public void addElement(ViewPiece element) {
@@ -45,5 +48,10 @@ public class UIController {
     public UIController() {
         this.elementsInScreen = new ArrayList<>();
         delta = 10;
+    }
+
+    public void deleteElement(ViewPiece element) {
+        this.elementsInScreen.remove(element);
+        element.destroy();
     }
 }

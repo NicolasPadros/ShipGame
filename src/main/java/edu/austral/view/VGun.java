@@ -27,7 +27,7 @@ public class VGun extends ViewPiece {
 
     }
 
-    @Override
+
     public void draw(int x, int y) {
 
     }

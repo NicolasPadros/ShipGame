@@ -11,6 +11,8 @@ public class Main extends GameFramework {
     int x = 0;
     int y = 0;
 
+    int gameState = 0;
+
     private GameController gameController;
 
     public static void main(String args[]) {
@@ -19,23 +21,37 @@ public class Main extends GameFramework {
 
 
     @Override public void draw(float time, PApplet graphics) {
+        switch (gameState){
+            case 0:
+                gameController = new GameController(new AsteroidController(), new UIController(),
+                        new PlayerController(), new PowerUpController(), graphics);
+                gameController.start();
+                gameState = 1;
+                break;
+            case 1:
+                gameController.update();
+                break;
+            case 2:
+                gameController.end();
+                break;
+
+
+        }
         //VShip vship = new VShip(graphics, new Vector2(100, 10));
         //vship.draw(x, y);
         //ellipse(0, 0, 100, 100);
-        background(51);
-        gameController.update(graphics);
+
 
 
     }
 
-    @Override public void keyPressed(KeyEvent event) {
-        System.out.println(event.getKeyCode());
-    }
+
 
     @Override
     public void keyPressed(processing.event.KeyEvent event) {
         //super.keyPressed(event);
-        System.out.println(event.getKeyCode());
+        //System.out.println(event.getKeyCode());
+        gameController.keyPressed(event);
     }
 
     /*
@@ -66,7 +82,8 @@ public class Main extends GameFramework {
 
     @Override
     public void setup() {
-        gameController = new GameController(new AsteroidController(), new UIController(), new PlayerController(), new PowerUpController());
-        gameController.start();
+        background(51);
+        frameRate(30);
+
     }
 }

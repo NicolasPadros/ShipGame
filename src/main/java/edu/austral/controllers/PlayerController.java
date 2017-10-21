@@ -1,8 +1,14 @@
 package edu.austral.controllers;
 
+import edu.austral.models.Key;
 import edu.austral.models.Player;
 import edu.austral.models.Ship;
+import edu.austral.util.Vector2;
+import processing.core.PApplet;
 import processing.event.KeyEvent;
+import sun.security.krb5.internal.PAData;
+
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,34 +21,81 @@ public class PlayerController {
 
     private List<Player> players;
 
-    private Map<Player, List<Integer>> controls;
+    //finds Player by tag
+    private List<Key> controls;
+
+
+    public PlayerController() {
+        players = new ArrayList<>();
+        controls = new ArrayList<>();
+    }
 
 
     public List<Player> getPlayers() {
         return players;
     }
 
-    public Player createPlayer() {
+    public Player createPlayer(PApplet app) {
         //only works for two players
         if(players.size() == 1) {
-            List<Integer> controls = new ArrayList<>();
-            controls.add(87);
-            controls.add(65);
-            controls.add(83);
-            controls.add(68);
-            controls.add(71);
-            Player newPlayer = new Player(controls, 2, new Ship());
+            Key up = new Key(1, 87, "moveU");
+            Key left = new Key(1, 65, "moveL");
+            Key down = new Key(1, 83, "moveD");
+            Key right = new Key(1, 68, "moveR");
+            Key shoot = new Key(1, 71, "shoot");
+
+            controls.add(up);
+            controls.add(left);
+            controls.add(down);
+            controls.add(right);
+            controls.add(shoot);
+            Ship two = new Ship("two", new Vector2(200, 200), app);
+            Player newPlayer = new Player(1, two);
             players.add(newPlayer);
             return newPlayer;
         }
-        List<Integer> controls = new ArrayList<>();
-        controls.add(38);
-        controls.add(37);
-        controls.add(40);
-        controls.add(39);
-        controls.add(32);
-        Player player = new Player(controls, 1, new Ship());
+        Key up = new Key(0, 38, "moveU");
+        Key left = new Key(0, 37, "moveL");
+        Key down = new Key(0, 40, "moveD");
+        Key right = new Key(0, 39, "moveR");
+        Key shoot = new Key(0, 32, "shoot");
+
+        controls.add(up);
+        controls.add(left);
+        controls.add(down);
+        controls.add(right);
+        controls.add(shoot);
+        Ship one = new Ship("one", new Vector2(250, 250), app);
+        Player player = new Player( 0, one);
         players.add(player);
         return player;
+    }
+
+    public void receiveKey(KeyEvent event) {
+        int code = event.getKeyCode();
+        for (Key control : controls) {
+            if(control.getKeyCode() == code){
+                String toDo = control.getFunction();
+                Player player = players.get(control.getPlayerTag());
+                switch (toDo){
+                    case "shoot":
+                        player.shoot();
+                        break;
+                    case "moveL":
+                        player.moveLeft();
+                        break;
+                    case "moveR":
+                        player.moveRight();
+                        break;
+                    case "moveU":
+                        player.moveUp();
+                        break;
+                    case "moveD":
+                        player.moveDown();
+                        break;
+                }
+            }
+
+        }
     }
 }

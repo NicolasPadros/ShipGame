@@ -4,6 +4,8 @@ import edu.austral.models.Asteroid;
 import edu.austral.models.Player;
 import edu.austral.util.Vector2;
 import processing.core.PApplet;
+import processing.event.KeyEvent;
+
 
 import java.util.List;
 
@@ -49,13 +51,14 @@ public class GameController {
             uiController.addElement(player.getShip().getVShip());
         }
         */
-        uiController.addElement(asteroidController.createAsteroid(app, new Vector2(100, 100)).getVAsteroid());
+        //uiController.addElement(asteroidController.createAsteroid(app, new Vector2(100, 100)).getVAsteroid());
+        this.addPlayer();
        //uiController.start();
         //this.update();
     }
 
     public void addPlayer() {
-
+        uiController.addElement(playerController.createPlayer(app).getShip().getVShip());
     }
 
     public void pause() {}
@@ -64,16 +67,22 @@ public class GameController {
 
     public void setup() {}
 
-    public void update(PApplet app) {
-        this.app = app;
+    public void update() {
         /*
+
         if(app.frameCount % 100 == 0){
             Asteroid newAst = asteroidController.createAsteroid(app,
-                    new Vector2((float)Math.random() * 1000, (float)Math.random() * 1000));
+                    new Vector2((float)Math.random() * app.width, (float)Math.random() * app.height));
             uiController.addElement(newAst.getVAsteroid());
         }
         */
-        asteroidController.update(app);
-        //uiController.update();
+
+        //asteroidController.update(app, uiController);
+
+        uiController.update();
+    }
+
+    public void keyPressed(KeyEvent event) {
+        playerController.receiveKey(event);
     }
 }

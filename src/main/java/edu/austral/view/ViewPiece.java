@@ -4,6 +4,7 @@ import edu.austral.util.Collisionable;
 import edu.austral.util.Vector2;
 import processing.core.PApplet;
 
+
 import java.awt.*;
 
 /**
@@ -17,21 +18,26 @@ public abstract class ViewPiece implements Collisionable<ViewPiece>{
 
     protected PApplet parent;
 
+    protected boolean alive;
+
     public ViewPiece(PApplet parent, Vector2 position) {
         this.parent = parent;
         this.position = position;
+        this.alive = true;
     }
 
     public abstract void spawn();
 
-    public abstract void destroy();
+    public void destroy() {
+        this.alive = false;
+    }
 
     @Override
     public Shape getShape() {
         return shape;
     }
 
-    public abstract void draw(int x, int y);
+
 
 
     public abstract void update();

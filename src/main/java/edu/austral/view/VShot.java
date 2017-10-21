@@ -35,7 +35,7 @@ public class VShot extends ViewPiece {
 
     }
 
-    @Override
+
     public void draw(int x, int y) {
 
     }

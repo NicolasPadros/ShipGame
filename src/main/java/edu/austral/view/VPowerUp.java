@@ -16,7 +16,7 @@ public class VPowerUp extends ViewPiece {
         return super.getShape();
     }
 
-    @Override
+
     public void draw(int x, int y) {
 
     }
