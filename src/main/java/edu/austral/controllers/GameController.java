@@ -2,12 +2,14 @@ package edu.austral.controllers;
 
 import edu.austral.models.Asteroid;
 import edu.austral.models.Player;
+import edu.austral.models.Shot;
 import edu.austral.util.Vector2;
 import processing.core.PApplet;
 import processing.event.KeyEvent;
 
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by nicolas-p on 20/10/17.
@@ -68,21 +70,22 @@ public class GameController {
     public void setup() {}
 
     public void update() {
-        /*
+
 
         if(app.frameCount % 100 == 0){
             Asteroid newAst = asteroidController.createAsteroid(app,
                     new Vector2((float)Math.random() * app.width, (float)Math.random() * app.height));
             uiController.addElement(newAst.getVAsteroid());
         }
-        */
 
-        //asteroidController.update(app, uiController);
+
+        asteroidController.update(app, uiController);
 
         uiController.update();
     }
 
     public void keyPressed(KeyEvent event) {
-        playerController.receiveKey(event);
+        Optional<Shot> optional = playerController.receiveKey(event);
+        optional.ifPresent(shot -> uiController.addElement(shot.getVShot()));
     }
 }

@@ -61,4 +61,8 @@ public class VShip extends ViewPiece {
     @Override
     public void destroy() {
     }
+
+    public PApplet getApp() {
+        return parent;
+    }
 }

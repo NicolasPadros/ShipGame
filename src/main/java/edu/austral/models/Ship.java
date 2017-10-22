@@ -5,6 +5,9 @@ import edu.austral.view.VShip;
 import edu.austral.view.ViewPiece;
 import processing.core.PApplet;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static processing.core.PApplet.radians;
 
 /**
@@ -23,17 +26,17 @@ public class Ship {
     private VShip viewShip;
 
 
-    public void shoot() {
+    public Shot shoot(Player player) {
         if(upgrade != null) {
             if (upgrade.getMunition() != 0) {
-                upgrade.shoot();
-                return;
+                return upgrade.shoot(this.position,this.direction, player, this.viewShip.getApp());
+
             }
         } else {
             upgrade = null;
-            regularGun.shoot();
-            return;
+            return regularGun.shoot(this.position, this.direction.$times(10), player, this.viewShip.getApp());
             }
+            return null;
     }
 
     public void move(float x, float y) {
@@ -61,9 +64,13 @@ public class Ship {
     public Ship(String model, Vector2 position, PApplet app) {
         this.model = model;
         this.position = position;
-        this.direction = new Vector2(1, 0);
+        this.direction = new Vector2(0, 1);
 
         this.viewShip = new VShip(app, this.position);
+        List<Vector2> vectors = new ArrayList<>();
+        vectors.add(new Vector2(1, 0));
+
+        this.regularGun = new Gun(1, 1, vectors, this.position);
 
     }
 

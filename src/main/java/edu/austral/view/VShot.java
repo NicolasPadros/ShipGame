@@ -2,6 +2,8 @@ package edu.austral.view;
 
 import edu.austral.util.Vector2;
 import processing.core.PApplet;
+import processing.core.PConstants;
+import processing.core.PShape;
 
 import java.awt.*;
 
@@ -9,12 +11,16 @@ import java.awt.*;
  * Created by nicolas-p on 14/10/17.
  */
 public class VShot extends ViewPiece {
+
     private Vector2 direction;
 
-    public VShot(PApplet parent, Vector2 position, Vector2 direction, Shape shape) {
+    private PShape shape;
+
+    public VShot(PApplet parent, Vector2 position, Vector2 direction) {
         super(parent, position);
         this.direction = direction;
-        this.shape = shape;
+        this.shape = parent.createShape(PConstants.ELLIPSE, this.position.x(), this.position.y(), 10, 10);
+        //this.shape = shape;
 
     }
 
@@ -25,6 +31,7 @@ public class VShot extends ViewPiece {
 
     @Override
     public void spawn() {
+        parent.shape(shape);
 
     }
 
@@ -40,5 +47,14 @@ public class VShot extends ViewPiece {
 
     }
 
-    public void update() {}
+    public void update() {
+        this.position = this.position.$plus(direction);
+
+        if (this.position.y() < 0 || this.position.y() > parent.height + 15) {
+            this.destroy();
+        }
+        parent.ellipse(this.position.x(), this.position.y(), 10, 10);
+        //parent.shape(shape, this.position.x(), this.position.y(), 10, 10);
+
+    }
 }

@@ -3,6 +3,7 @@ package edu.austral.controllers;
 import edu.austral.models.Key;
 import edu.austral.models.Player;
 import edu.austral.models.Ship;
+import edu.austral.models.Shot;
 import edu.austral.util.Vector2;
 import processing.core.PApplet;
 import processing.event.KeyEvent;
@@ -13,6 +14,7 @@ import sun.security.krb5.internal.PAData;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Created by nicolas-p on 20/10/17.
@@ -71,7 +73,8 @@ public class PlayerController {
         return player;
     }
 
-    public void receiveKey(KeyEvent event) {
+    //returns optional if the key was for shooting
+    public Optional<Shot> receiveKey(KeyEvent event) {
         int code = event.getKeyCode();
         for (Key control : controls) {
             if(control.getKeyCode() == code){
@@ -79,8 +82,7 @@ public class PlayerController {
                 Player player = players.get(control.getPlayerTag());
                 switch (toDo){
                     case "shoot":
-                        player.shoot();
-                        break;
+                        return Optional.of(player.shoot());
                     case "moveL":
                         player.moveLeft();
                         break;
@@ -95,7 +97,7 @@ public class PlayerController {
                         break;
                 }
             }
-
         }
+        return Optional.empty();
     }
 }

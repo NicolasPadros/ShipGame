@@ -38,7 +38,8 @@ public class Player {
         this.velocity = 10;
     }
 
-    public void shoot() {
+    public Shot shoot() {
+        return this.ship.shoot(this);
     }
 
     public void move(float x, float y) {
