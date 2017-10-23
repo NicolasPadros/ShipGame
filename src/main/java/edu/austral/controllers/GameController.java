@@ -88,4 +88,8 @@ public class GameController {
         Optional<Shot> optional = playerController.receiveKey(event);
         optional.ifPresent(shot -> uiController.addElement(shot.getVShot()));
     }
+
+    public void keyReleased(KeyEvent event) {
+        uiController.update();
+    }
 }

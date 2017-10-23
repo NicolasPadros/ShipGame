@@ -41,4 +41,8 @@ public abstract class ViewPiece implements Collisionable<ViewPiece>{
 
 
     public abstract void update();
+
+    public boolean isAlive() {
+        return alive;
+    }
 }

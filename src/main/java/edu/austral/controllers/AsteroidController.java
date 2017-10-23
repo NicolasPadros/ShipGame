@@ -44,9 +44,10 @@ public class AsteroidController {
                 asteroidsIter.remove();
                 uiController.deleteElement(asteroid.getVAsteroid());
                 asteroid.kill();
-            }
+            } else {
                 asteroid.update(app);
-                System.out.println(asteroid.getPosition().x() + " " + asteroid.getPosition().y());
+            }
+            //System.out.println(asteroid.getPosition().x() + " " + asteroid.getPosition().y());
 
         }
     }

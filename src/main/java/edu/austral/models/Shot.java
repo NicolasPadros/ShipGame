@@ -26,7 +26,7 @@ public class Shot {
         this.damage = damage;
         this.position = position;
         this.direction = direction;
-        this.vShot = new VShot(app, position, direction);
+        this.vShot = new VShot(app, position, direction, player);
     }
 
     public void update() {

@@ -8,6 +8,7 @@ import processing.core.PApplet;
 import java.util.ArrayList;
 import java.util.List;
 
+import static processing.core.PApplet.degrees;
 import static processing.core.PApplet.radians;
 
 /**
@@ -45,8 +46,11 @@ public class Ship {
     }
     
     public void rotate(float angle) {
+        /*
         this.direction = this.direction.rotate(angle);
         this.viewShip.rotate(angle);
+        System.out.println(degrees(this.direction.angle()));
+        */
     }
 
     public void upgradeGun(Gun newGun){
@@ -64,7 +68,7 @@ public class Ship {
     public Ship(String model, Vector2 position, PApplet app) {
         this.model = model;
         this.position = position;
-        this.direction = new Vector2(0, 1);
+        this.direction = new Vector2(0, -1);
 
         this.viewShip = new VShip(app, this.position);
         List<Vector2> vectors = new ArrayList<>();

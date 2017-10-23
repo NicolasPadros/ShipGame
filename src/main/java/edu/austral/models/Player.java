@@ -25,17 +25,21 @@ public class Player {
 
     private Ship ship;
 
+    private int rotationSpeed;
+
     public Player(List<Integer> controls, int tag, Ship ship) {
         this.controls = controls;
         this.tag = tag;
         this.ship = ship;
         this.velocity = 10;
+        this.rotationSpeed = 20;
     }
 
     public Player(int tag, Ship ship) {
         this.tag = tag;
         this.ship = ship;
         this.velocity = 10;
+        this.rotationSpeed = 20;
     }
 
     public Shot shoot() {
@@ -44,7 +48,7 @@ public class Player {
 
     public void move(float x, float y) {
         this.ship.move(x, y);
-        System.out.println(degrees(this.getShip().getDirection().angle()));
+        //System.out.println(degrees(this.getShip().getDirection().angle()));
 
     }
 
@@ -64,7 +68,14 @@ public class Player {
 
     public void moveLeft() {
         this.move(-velocity, 0);
-        this.ship.rotate(radians(10));
+        float angle = (degrees(this.ship.getDirection().angle()));
+        if(angle <= 0){
+            if(angle + 180 < rotationSpeed) this.ship.rotate(radians(angle + 180));
+            else this.ship.rotate(radians(-rotationSpeed));
+        }else {
+            if(180 -angle < rotationSpeed) this.ship.rotate(radians((180 - angle)));
+            else this.ship.rotate(radians(rotationSpeed));
+        }
         /*
         float angle = degrees(this.ship.getDirection().angle());
         if(angle == 270 || angle == -90) return;
@@ -82,40 +93,42 @@ public class Player {
 
     public void moveRight() {
         this.move(velocity, 0);
-        float angle = degrees(this.ship.getDirection().angle());
-        if(angle == 90 || angle == -270) return;
-        if(angle >= 180){
-            this.ship.rotate(radians(10));
-            return;
-        } else {
-            this.ship.rotate(radians(-10));
-            return;
+        float angle = (degrees(this.ship.getDirection().angle()));
+        if(angle <= 0){
+            if(angle > -rotationSpeed) this.ship.rotate(radians(-angle));
+            else this.ship.rotate(radians(rotationSpeed));
+        }else {
+            if(angle < rotationSpeed) this.ship.rotate(radians(-angle));
+            else this.ship.rotate(radians(-rotationSpeed));
         }
     }
 
     public void moveUp() {
         this.move(0, -velocity);
         float angle = degrees(this.ship.getDirection().angle());
-        if(angle == 0 || angle == -360) return;
-        if(angle >= 180){
-            this.ship.rotate(radians(10));
-            return;
+        if(Math.abs(angle) <= 90){
+            if(angle + 90 < rotationSpeed) this.ship.rotate(radians(angle + 90));
+            else this.ship.rotate(radians(-rotationSpeed));
         } else {
-            this.ship.rotate(radians(-10));
-            return;
+            if(angle + 90 < -rotationSpeed) this.ship.rotate(radians(90 + angle));
+            else this.ship.rotate(radians(rotationSpeed));
         }
     }
 
     public void moveDown() {
         this.move(0, velocity);
         float angle = degrees(this.ship.getDirection().angle());
-        if(angle == 180 || angle == -180) return;
-        if(angle >= 180){
-            this.ship.rotate(radians(10));
-            return;
+        if(Math.abs(angle) <= 90){
+            if(90 - angle < rotationSpeed) this.ship.rotate(radians(90 -angle));
+            else this.ship.rotate(radians(rotationSpeed));
         } else {
-            this.ship.rotate(radians(-10));
-            return;
+            if(angle - 90 < rotationSpeed) this.ship.rotate(radians(angle - 90));
+            else this.ship.rotate(radians(-rotationSpeed));
         }
+    }
+
+    public void addScore(int toAdd) {
+        this.score += toAdd;
+
     }
 }

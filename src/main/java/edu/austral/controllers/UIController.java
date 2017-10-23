@@ -1,6 +1,7 @@
 package edu.austral.controllers;
 
 import edu.austral.models.Asteroid;
+import edu.austral.util.CollisionEngine;
 import edu.austral.view.VAsteroid;
 import edu.austral.view.VShot;
 import edu.austral.view.ViewPiece;
@@ -8,6 +9,7 @@ import processing.core.PApplet;
 
 import javax.swing.text.View;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -33,9 +35,16 @@ public class UIController {
     public void end() {}
 
     public void update() {
-        for (ViewPiece viewPiece : elementsInScreen) {
-                viewPiece.update();
-            }
+        Iterator<ViewPiece> iterator = elementsInScreen.iterator();
+        while(iterator.hasNext()){
+            ViewPiece viewPiece = iterator.next();
+            if(!viewPiece.isAlive()) {
+                iterator.remove();
+            } else viewPiece.update();
+        }
+
+        CollisionEngine<ViewPiece> engine = new CollisionEngine<>();
+        engine.checkCollisions(elementsInScreen);
     }
 
 

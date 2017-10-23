@@ -41,6 +41,7 @@ public class Asteroid {
         return vAsteroid;
     }
 
+    //TODO shouldnt update its view
     public void update(PApplet app) {
         this.position = this.position.$plus(direction);
         this.vAsteroid.update(app);

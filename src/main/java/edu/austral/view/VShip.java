@@ -2,7 +2,11 @@ package edu.austral.view;
 
 import edu.austral.util.Vector2;
 import processing.core.PApplet;
+import processing.core.PConstants;
 import processing.core.PImage;
+
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Ellipse2D;
 
 import static processing.core.PConstants.CENTER;
 
@@ -16,7 +20,9 @@ public class VShip extends ViewPiece {
     public VShip(PApplet parent, Vector2 position) {
         super(parent, position);
         img = parent.loadImage("resources/Spaceship.png");
-        this.direction = new Vector2(1, 0);
+        this.direction = new Vector2(0, -1);
+        this.shape = new Ellipse2D.Double(position.x(), position.y(), 40, 40);
+
     }
 
     public static PImage getImg() {
@@ -25,7 +31,7 @@ public class VShip extends ViewPiece {
 
     @Override
     public void collisionedWith(ViewPiece collisionable) {
-
+        System.out.println("hola");
     }
 
     @Override
@@ -51,7 +57,8 @@ public class VShip extends ViewPiece {
         parent.pushMatrix();
         parent.imageMode(CENTER);
         parent.translate(this.position.x(), this.position.y());
-        parent.rotate(this.direction.angle());
+        parent.rotate(this.direction.angle() + PConstants.HALF_PI);
+        this.shape = new Ellipse2D.Float(position.x(), position.y(), 40, 40);
         //parent.image(img, position.x(), position.y(), 40, 40);
         parent.image(img, 0, 0, 40, 40);
         parent.popMatrix();

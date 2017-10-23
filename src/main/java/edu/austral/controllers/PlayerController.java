@@ -100,4 +100,37 @@ public class PlayerController {
         }
         return Optional.empty();
     }
+
+    public void releaseKey(KeyEvent event) {
+        int code = event.getKeyCode();
+        for (Key control : controls) {
+            if (control.getKeyCode() == code) {
+                String toDo = control.getFunction();
+                Player player = players.get(control.getPlayerTag());
+                return;
+                /*
+                switch (toDo){
+                    case "shoot":
+                        return;
+                    case "moveL":
+                        player.
+                        break;
+                    case "moveR":
+                        player.moveRight();
+                        break;
+                    case "moveU":
+                        player.moveUp();
+                        break;
+                    case "moveD":
+                        player.moveDown();
+                        break;
+                }
+            }
+        }
+        return Optional.empty();
+        */
+            }
+        }
+    }
+
 }

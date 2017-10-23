@@ -54,6 +54,11 @@ public class Main extends GameFramework {
         gameController.keyPressed(event);
     }
 
+    @Override
+    public void keyReleased(processing.event.KeyEvent event) {
+        gameController.keyReleased(event);
+    }
+
     /*
     @Override
     public void keyPressed() {
