@@ -28,11 +28,6 @@ public class PowerUpController {
         this.powerUps = new ArrayList<>();
     }
 
-    public void deletePowerUp(PowerUp powerUp) {
-        if(powerUps.contains(powerUp)) {
-            powerUps.remove(powerUp);
-        }
-    }
 
 
     public void update(PApplet app, UIController uiController) {

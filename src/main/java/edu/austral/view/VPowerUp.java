@@ -29,9 +29,7 @@ public class VPowerUp extends ViewPiece {
     }
 
 
-    public void draw(int x, int y) {
 
-    }
 
     @Override
     public void update() {

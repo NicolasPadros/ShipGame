@@ -68,7 +68,7 @@ public class VShip extends ViewPiece {
     }
     @Override
     public void update() {
-        if (this.position.y() < 0 || this.position.y() > parent.height + 15) {
+        if (checkBoundaries()) {
             this.destroy();
             this.player.lose();
             return;

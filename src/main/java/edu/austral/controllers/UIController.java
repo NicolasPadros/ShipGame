@@ -9,6 +9,7 @@ import edu.austral.view.ViewPiece;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PFont;
+import processing.core.PImage;
 
 import javax.swing.text.View;
 import java.util.ArrayList;
@@ -22,15 +23,14 @@ public class UIController {
 
     private final PApplet app;
     private final PFont p;
-    private float delta;
-
     private PFont pTitle;
+
+    private final PImage img;
 
 
 
     private List<ViewPiece> elementsInScreen;
-
-    public void pause() {}
+    
 
     public void showStartUp() {
         this.app.fill(255);
@@ -39,11 +39,9 @@ public class UIController {
     }
 
 
-    public void showMenu() {}
-
-    public void end() {}
 
     public void update() {
+        app.background(img);
         Iterator<ViewPiece> iterator = elementsInScreen.iterator();
         while(iterator.hasNext()){
             ViewPiece viewPiece = iterator.next();
@@ -69,6 +67,7 @@ public class UIController {
         this.pTitle = this.app.createFont("Arial", 22, true);
         this.p = this.app.createFont("Arial", 11, true);
         this.app.textAlign(PConstants.CENTER);
+        this.img = app.loadImage("resources/background.jpg");
     }
 
     public void deleteElement(ViewPiece element) {
@@ -96,6 +95,7 @@ public class UIController {
     }
 
     public void showPause() {
+        this.app.pause();
         this.app.fill(255);
         this.app.textFont(pTitle);
         this.app.text("Pause", this.app.width/2, this.app.height/2);

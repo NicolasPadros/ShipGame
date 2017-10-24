@@ -13,7 +13,6 @@ import static processing.core.PApplet.radians;
  */
 public class Player {
 
-    private List<Integer> controls;
 
     private int livesCount;
 
@@ -27,17 +26,9 @@ public class Player {
 
     private int rotationSpeed;
     private boolean alive = true;
-    private float acummulatedVelocity;
-    private float acummulatedRotation;
 
-    public Player(List<Integer> controls, int tag, Ship ship) {
-        this.controls = controls;
-        this.tag = tag;
-        this.ship = ship;
-        this.velocity = 10;
-        this.rotationSpeed = 20;
 
-    }
+
 
     public Player(int tag, Ship ship) {
         this.tag = tag;
@@ -46,24 +37,19 @@ public class Player {
         this.rotationSpeed = 20;
         this.livesCount = 5;
         this.ship.addPlayer(this);
-        this.score = 50;
+        this.score = 0;
     }
 
     public List<Shot> shoot() {
         return this.ship.shoot(this);
     }
 
-    public void move(float x, float y) {
+    private void move(float x, float y) {
         this.ship.move(x, y);
          //System.out.println(degrees(this.getShip().getDirection().angle()));
 
     }
 
-    public void pause() {}
-
-    public void start() {
-
-    }
 
     public Ship getShip() {
         return ship;
@@ -75,7 +61,7 @@ public class Player {
 
     public void rotateLeft() {
         //this.move(-velocity, 0);
-        this.ship.rotate(radians(-10));
+        this.ship.rotate(radians(-rotationSpeed));
         /*
         float angle = (degrees(this.ship.getDirection().angle()));
         if(angle <= 0){
@@ -102,7 +88,7 @@ public class Player {
 
     public void rotateRight() {
         //this.move(velocity, 0);
-        this.ship.rotate(radians(10));
+        this.ship.rotate(radians(rotationSpeed));
         /*
         float angle = (degrees(this.ship.getDirection().angle()));
         if(angle <= 0){
@@ -115,21 +101,6 @@ public class Player {
         */
     }
 
-    public void moveUp() {
-
-        this.move(0, velocity);
-
-    }
-
-    public void moveDown() {
-        this.move(0, -velocity);
-
-    }
-
-    public void rotate(float degrees){
-        //this.ship.rotate(radians(degrees));
-        acummulatedRotation += degrees;
-    }
 
     public void addScore(int toAdd) {
         this.score += toAdd;
@@ -163,22 +134,14 @@ public class Player {
         this.livesCount = 0;
     }
 
-    public void update() {
-        this.move(0, acummulatedVelocity);
-        this.rotate(acummulatedRotation);
-        acummulatedVelocity = 0;
-        acummulatedRotation = 0;
+
+
+    public void moveForward() {
+        this.move(0, velocity);
+
     }
 
-    public void accumulateVelocity(){
-        this.acummulatedVelocity+=velocity;
-    }
-
-    public void decreaseAccumulatedVelocity(){
-        this.acummulatedVelocity -=velocity;
-    }
-
-    public void accumulateRotation(float acummulatedRotation){
-        this.acummulatedRotation += acummulatedRotation;
+    public void moveBackwards() {
+        this.move(0, -velocity);
     }
 }

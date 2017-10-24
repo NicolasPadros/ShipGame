@@ -61,10 +61,7 @@ public class Main extends GameFramework {
         gameState = gameController.keyPressed(event);
     }
 
-    @Override
-    public void keyReleased(processing.event.KeyEvent event) {
-        gameController.keyReleased(event);
-    }
+
 
     /*
     @Override
@@ -94,7 +91,7 @@ public class Main extends GameFramework {
 
     @Override
     public void setup() {
-        background(51);
+        background(10);
         frameRate(30);
         width = 500;
         height = 500;

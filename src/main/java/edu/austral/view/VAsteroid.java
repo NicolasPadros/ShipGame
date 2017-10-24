@@ -17,10 +17,13 @@ public class VAsteroid extends ViewPiece {
 
     private static PImage img;
 
-    public VAsteroid(PApplet app, Vector2 position, Vector2 direction) {
+    private int life;
+
+    public VAsteroid(PApplet app, Vector2 position, Vector2 direction, int life) {
         super(app, position);
         this.direction = direction;
         this.shape = new Ellipse2D.Double(position.x(), position.y(), 40, 40);
+        this.life = life;
     }
 
     public static PImage getImg() {
@@ -30,7 +33,8 @@ public class VAsteroid extends ViewPiece {
     @Override
     public void collisionedWith(ViewPiece collisionable) {
         if(collisionable instanceof VShot){
-            this.destroy();
+            this.life -= ((VShot)collisionable).getDamage();
+
         }
     }
 
@@ -42,34 +46,21 @@ public class VAsteroid extends ViewPiece {
 
 
 
-
-    public void draw(int x, int y) {
-
-    }
-
     public void update() {
-        if (this.alive) {
+        if (life > 0) {
 
             this.position = this.position.$plus(direction);
 
-            if (this.position.y() < 0 || this.position.y() > parent.height + 15) {
+            if (checkBoundaries()) {
                 this.destroy();
                 return;
             }
             parent.image(img, this.position.x(), this.position.y(), 40, 40);
             this.shape = new Ellipse2D.Float(position.x(), position.y(), 40, 40);
         } else {
-            System.out.println("dead");
+            this.alive = false;
         }
     }
 
-    public void update(PApplet app) {
-        this.parent = app;
-        this.update();
-    }
 
-    @Override
-    public void destroy() {
-        super.destroy();
-    }
 }

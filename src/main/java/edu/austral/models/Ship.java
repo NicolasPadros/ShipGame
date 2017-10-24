@@ -31,16 +31,13 @@ public class Ship {
 
 
     public List<Shot> shoot(Player player) {
-        if(upgrade != null) {
-            if (upgrade.getMunition() != 0) {
+        if(upgrade != null && upgrade.getMunition() >= 0) {
                 return upgrade.shoot(this.position,this.direction.$times(10), player, this.viewShip.getApp());
-
             }
-        } else {
+         else {
             upgrade = null;
             return regularGun.shoot(this.position, this.direction.$times(10), player, this.viewShip.getApp());
             }
-            return null;
     }
 
     public void move(float x, float y) {
@@ -77,7 +74,7 @@ public class Ship {
         List<Vector2> vectors = new ArrayList<>();
         vectors.add(new Vector2(0, -1));
 
-        this.regularGun = new Gun(1, 1, vectors);
+        this.regularGun = new Gun(1, 500, vectors, 1);
         this.viewShip = new VShip(app, this.position, this);
 
 

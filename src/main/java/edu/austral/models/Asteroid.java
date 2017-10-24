@@ -25,15 +25,18 @@ public class Asteroid {
         return position;
     }
 
-    public Asteroid(Vector2 position, PApplet app, Vector2 direction) {
+    public Asteroid(Vector2 position, PApplet app, Vector2 direction, int lives) {
         this.position = position;
         this.direction = direction;
         this.alive = true;
+        this.life = lives;
+        /*
         PVector dirct = PVector.random2D();
         this.direction = new Vector2(dirct.x, dirct.y);
+        */
         //this.direction = this.direction.$times(3);
 
-        vAsteroid = new VAsteroid(app, this.position, this.direction);
+        vAsteroid = new VAsteroid(app, this.position, this.direction, lives);
     }
 
 
@@ -41,10 +44,10 @@ public class Asteroid {
         return vAsteroid;
     }
 
-    //TODO shouldnt update its view
-    public void update(PApplet app) {
+
+    public void update() {
         this.position = this.position.$plus(direction);
-        //this.vAsteroid.update(app);
+
     }
 
     public boolean isAlive() {

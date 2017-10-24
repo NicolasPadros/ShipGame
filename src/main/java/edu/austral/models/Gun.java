@@ -25,6 +25,8 @@ public class Gun {
 
     private int damage;
 
+    private int lastShot;
+
     //private VGun viewGun;
 
     public int getMunition() {
@@ -33,20 +35,21 @@ public class Gun {
 
     public List<Shot> shoot(Vector2 position, Vector2 direction, Player player, PApplet app) {
         List<Shot> shots = new ArrayList<>();
+        if(app.millis() - lastShot < firingRate) return shots;
         for (Vector2 vector2 : typeOfShot) {
             shots.add(new Shot(player, this.damage, position.$plus(direction.$times(4)),vector2.rotate(direction.angle()+ HALF_PI).$times(direction.module()), app));
-            munition--;
+            munition-=1;
         }
-
+        lastShot = app.millis();
         return shots;
         //return null;
     }
 
-    public Gun(int munition, float firingRate, List<Vector2> typeOfShot) {
+    public Gun(int munition, float firingRate, List<Vector2> typeOfShot, int damage) {
         this.munition = munition;
         this.firingRate = firingRate;
         //this.bulletShot = bulletShot;
         this.typeOfShot = typeOfShot;
-        //this.viewGun = new VGun(app, position);
+        this.damage = damage;
     }
 }

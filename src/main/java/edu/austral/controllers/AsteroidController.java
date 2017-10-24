@@ -1,10 +1,7 @@
 package edu.austral.controllers;
 
 import edu.austral.models.Asteroid;
-import edu.austral.util.Vector2;
-import edu.austral.view.VAsteroid;
 import processing.core.PApplet;
-import processing.core.PVector;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -18,24 +15,25 @@ public class AsteroidController {
 
     private List<Asteroid> asteroids;
 
-    private AsteroidCreator creator;
+    private AsteroidCreator creator1;
+    private AsteroidCreator creator2;
+
+    private boolean state;
 
     public Asteroid createAsteroid(PApplet app) {
-        Asteroid ast =  creator.createAsteroid(app);
+        Asteroid ast;
+        if(state) ast =  creator1.createAsteroid(app);
+        else ast = creator2.createAsteroid(app);
         asteroids.add(ast);
+        state = !state;
         return ast;
     }
 
     public AsteroidController() {
-
         this.asteroids = new ArrayList<>();
-        this.creator = new RandomCreator();
-    }
-
-    public void deleteAsteroid(Asteroid asteroid) {
-        if(asteroids.contains(asteroid)) {
-            asteroids.remove(asteroid);
-        }
+        this.creator1 = new SlowCreator();
+        this.creator2 = new FastCreator();
+        state = true;
     }
 
 
@@ -49,7 +47,7 @@ public class AsteroidController {
                 //uiController.deleteElement(asteroid.getVAsteroid());
                 asteroid.kill();
             } else {
-                asteroid.update(app);
+                asteroid.update();
             }
             //System.out.println(asteroid.getPosition().x() + " " + asteroid.getPosition().y());
 

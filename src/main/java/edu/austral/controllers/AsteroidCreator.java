@@ -9,5 +9,5 @@ import processing.core.PApplet;
  */
 public interface AsteroidCreator {
 
-    public Asteroid createAsteroid(PApplet app);
+    Asteroid createAsteroid(PApplet app);
 }

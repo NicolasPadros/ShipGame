@@ -81,61 +81,30 @@ public class PlayerController {
                     case "shoot":
                         return Optional.of(player.shoot());
                     case "moveL":
-                        player.rotate(-10);
-                        break;
-                    case "moveR":
-                        player.rotate(10);
-                        break;
-                    case "moveU":
-                        player.accumulateVelocity();
-                        break;
-                    case "moveD":
-                        player.decreaseAccumulatedVelocity();
-                        break;
-                }
-            }
-        }
-
-        return Optional.empty();
-    }
-
-    public void releaseKey(KeyEvent event) {
-        int code = event.getKeyCode();
-        for (Key control : controls) {
-            if (control.getKeyCode() == code) {
-                String toDo = control.getFunction();
-                Player player = players.get(control.getPlayerTag());
-                return;
-                /*
-                switch (toDo){
-                    case "shoot":
-                        return;
-                    case "moveL":
-                        player.
+                        player.rotateLeft();
                         break;
                     case "moveR":
                         player.rotateRight();
                         break;
                     case "moveU":
-                        player.moveUp();
+                        player.moveForward();
                         break;
                     case "moveD":
-                        player.moveDown();
+                        player.moveBackwards();
                         break;
                 }
             }
         }
+
         return Optional.empty();
-        */
-            }
-        }
     }
 
 
-    public boolean checkLifes() {
+
+
+    public boolean checkLives() {
         for (Player player : players) {
             if(!player.isAlive()) return true;
-            player.update();
         }
         return false;
     }

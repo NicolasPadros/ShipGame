@@ -11,7 +11,7 @@ import processing.core.PVector;
  */
 public class PowerUp {
 
-    private float spawnTime;
+    //private float spawnTime;
 
     private Gun gun;
 
@@ -30,7 +30,7 @@ public class PowerUp {
     public PowerUp(Vector2 position, PApplet app, Gun gun, float spawnTime) {
         this.position = position;
         this.gun = gun;
-        this.spawnTime = spawnTime;
+        //this.spawnTime = spawnTime;
 
         this.alive = true;
         PVector dirct = PVector.random2D();

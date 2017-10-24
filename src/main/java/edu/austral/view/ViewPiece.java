@@ -45,4 +45,9 @@ public abstract class ViewPiece implements Collisionable<ViewPiece>{
     public boolean isAlive() {
         return alive;
     }
+
+    public boolean checkBoundaries() {
+       return( this.position.y() < 0 || this.position.y() > parent.height + 15
+                || this.position.x() < 0 || this.position.x() > parent.width + 15);
+    }
 }
