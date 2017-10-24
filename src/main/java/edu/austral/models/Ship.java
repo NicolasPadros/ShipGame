@@ -4,6 +4,7 @@ import edu.austral.util.Vector2;
 import edu.austral.view.VShip;
 import edu.austral.view.ViewPiece;
 import processing.core.PApplet;
+import processing.core.PConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,10 +28,12 @@ public class Ship {
     private VShip viewShip;
 
 
-    public Shot shoot(Player player) {
+
+
+    public List<Shot> shoot(Player player) {
         if(upgrade != null) {
             if (upgrade.getMunition() != 0) {
-                return upgrade.shoot(this.position,this.direction, player, this.viewShip.getApp());
+                return upgrade.shoot(this.position,this.direction.$times(10), player, this.viewShip.getApp());
 
             }
         } else {
@@ -41,16 +44,17 @@ public class Ship {
     }
 
     public void move(float x, float y) {
-        this.position = this.position.$plus(new Vector2(x, y));
+        Vector2 toGo = new Vector2(x, y).rotate(this.direction.angle() - PConstants.HALF_PI);
+        this.position =this.position.$plus(toGo);
         this.viewShip.draw(this.position.x(), this.position.y());
     }
     
     public void rotate(float angle) {
-        /*
+
         this.direction = this.direction.rotate(angle);
         this.viewShip.rotate(angle);
-        System.out.println(degrees(this.direction.angle()));
-        */
+        //System.out.println(degrees(this.direction.angle()));
+
     }
 
     public void upgradeGun(Gun newGun){
@@ -70,15 +74,22 @@ public class Ship {
         this.position = position;
         this.direction = new Vector2(0, -1);
 
-        this.viewShip = new VShip(app, this.position);
         List<Vector2> vectors = new ArrayList<>();
-        vectors.add(new Vector2(1, 0));
+        vectors.add(new Vector2(0, -1));
 
-        this.regularGun = new Gun(1, 1, vectors, this.position);
+        this.regularGun = new Gun(1, 1, vectors);
+        this.viewShip = new VShip(app, this.position, this);
+
 
     }
 
     public Vector2 getDirection() {
         return direction;
     }
+
+    public void addPlayer(Player player) {
+        this.viewShip.addPlayer(player);
+    }
+
+
 }

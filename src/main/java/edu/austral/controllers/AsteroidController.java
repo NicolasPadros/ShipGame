@@ -18,14 +18,18 @@ public class AsteroidController {
 
     private List<Asteroid> asteroids;
 
-    public Asteroid createAsteroid(PApplet app, Vector2 position) {
-        Asteroid ast = new Asteroid(position, app);
+    private AsteroidCreator creator;
+
+    public Asteroid createAsteroid(PApplet app) {
+        Asteroid ast =  creator.createAsteroid(app);
         asteroids.add(ast);
         return ast;
     }
 
     public AsteroidController() {
+
         this.asteroids = new ArrayList<>();
+        this.creator = new RandomCreator();
     }
 
     public void deleteAsteroid(Asteroid asteroid) {
@@ -42,7 +46,7 @@ public class AsteroidController {
             if (asteroid.getPosition().y() < 0 || asteroid.getPosition().y() > app.height + 15
                     || asteroid.getPosition().x() < 0 || asteroid.getPosition().x() > app.width + 15) {
                 asteroidsIter.remove();
-                uiController.deleteElement(asteroid.getVAsteroid());
+                //uiController.deleteElement(asteroid.getVAsteroid());
                 asteroid.kill();
             } else {
                 asteroid.update(app);

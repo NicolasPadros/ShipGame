@@ -25,9 +25,9 @@ public class Asteroid {
         return position;
     }
 
-    public Asteroid(Vector2 position, PApplet app) {
+    public Asteroid(Vector2 position, PApplet app, Vector2 direction) {
         this.position = position;
-
+        this.direction = direction;
         this.alive = true;
         PVector dirct = PVector.random2D();
         this.direction = new Vector2(dirct.x, dirct.y);
@@ -44,7 +44,7 @@ public class Asteroid {
     //TODO shouldnt update its view
     public void update(PApplet app) {
         this.position = this.position.$plus(direction);
-        this.vAsteroid.update(app);
+        //this.vAsteroid.update(app);
     }
 
     public boolean isAlive() {

@@ -1,5 +1,7 @@
 package edu.austral.view;
 
+import edu.austral.models.Player;
+import edu.austral.models.Ship;
 import edu.austral.util.Vector2;
 import processing.core.PApplet;
 import processing.core.PConstants;
@@ -15,13 +17,18 @@ import static processing.core.PConstants.CENTER;
  */
 public class VShip extends ViewPiece {
     private static PImage img;
+    private final Ship ship;
     private Vector2 direction;
+    private Player player;
 
-    public VShip(PApplet parent, Vector2 position) {
+    private int timeCollapse = 100;
+    private int lastCollision;
+    public VShip(PApplet parent, Vector2 position, Ship ship) {
         super(parent, position);
         img = parent.loadImage("resources/Spaceship.png");
         this.direction = new Vector2(0, -1);
         this.shape = new Ellipse2D.Double(position.x(), position.y(), 40, 40);
+        this.ship = ship;
 
     }
 
@@ -31,12 +38,20 @@ public class VShip extends ViewPiece {
 
     @Override
     public void collisionedWith(ViewPiece collisionable) {
-        System.out.println("hola");
+        if(collisionable instanceof VPowerUp){
+            this.ship.upgradeGun(((VPowerUp)(collisionable)).getGun());
+            return;
+        } else if (collisionable instanceof VAsteroid){
+            if(parent.millis() - lastCollision < timeCollapse) return;
+            this.player.loseLife();
+            this.lastCollision = parent.millis();
+        }
+
     }
 
     @Override
     public void spawn() {
-        parent.image(img, position.x(), position.y(), 40, 40);
+        parent.image(img, position.x(), position.y(), 20, 20);
     }
 
 
@@ -53,7 +68,11 @@ public class VShip extends ViewPiece {
     }
     @Override
     public void update() {
-
+        if (this.position.y() < 0 || this.position.y() > parent.height + 15) {
+            this.destroy();
+            this.player.lose();
+            return;
+        }
         parent.pushMatrix();
         parent.imageMode(CENTER);
         parent.translate(this.position.x(), this.position.y());
@@ -71,5 +90,9 @@ public class VShip extends ViewPiece {
 
     public PApplet getApp() {
         return parent;
+    }
+
+    public void addPlayer(Player player) {
+        this.player = player;
     }
 }

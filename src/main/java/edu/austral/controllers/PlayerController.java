@@ -7,13 +7,10 @@ import edu.austral.models.Shot;
 import edu.austral.util.Vector2;
 import processing.core.PApplet;
 import processing.event.KeyEvent;
-import sun.security.krb5.internal.PAData;
-
 
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -74,7 +71,7 @@ public class PlayerController {
     }
 
     //returns optional if the key was for shooting
-    public Optional<Shot> receiveKey(KeyEvent event) {
+    public Optional<List<Shot>> receiveKey(KeyEvent event) {
         int code = event.getKeyCode();
         for (Key control : controls) {
             if(control.getKeyCode() == code){
@@ -84,20 +81,21 @@ public class PlayerController {
                     case "shoot":
                         return Optional.of(player.shoot());
                     case "moveL":
-                        player.moveLeft();
+                        player.rotate(-10);
                         break;
                     case "moveR":
-                        player.moveRight();
+                        player.rotate(10);
                         break;
                     case "moveU":
-                        player.moveUp();
+                        player.accumulateVelocity();
                         break;
                     case "moveD":
-                        player.moveDown();
+                        player.decreaseAccumulatedVelocity();
                         break;
                 }
             }
         }
+
         return Optional.empty();
     }
 
@@ -116,7 +114,7 @@ public class PlayerController {
                         player.
                         break;
                     case "moveR":
-                        player.moveRight();
+                        player.rotateRight();
                         break;
                     case "moveU":
                         player.moveUp();
@@ -131,6 +129,15 @@ public class PlayerController {
         */
             }
         }
+    }
+
+
+    public boolean checkLifes() {
+        for (Player player : players) {
+            if(!player.isAlive()) return true;
+            player.update();
+        }
+        return false;
     }
 
 }
